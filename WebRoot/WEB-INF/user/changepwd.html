@@ -1,0 +1,131 @@
+
+<script>
+$.ajaxSetup({
+	async: false
+});
+$._messengerDefaults = {
+	extraClasses: 'messenger-fixed messenger-theme-future messenger-on-bottom messenger-on-right'
+}
+$(function(){
+	$('#changePwd').modal({
+		backdrop: true
+	});
+});
+// 检查原密码
+function checkPwd(){
+	var pwd1 = $("#password1");
+	if(pwd1.val().replace(/\s/g,"") == ""){
+		$("div .pwd1").addClass("has-error");
+		$("#errMsg").text("原密码不能为空！");
+		pwd1.select();
+		return false;
+	}
+	$.post("${base}/user/checkPwd",{password:pwd1.val(),r:Math.random()},function(data){
+		if(!data){
+			$("div .pwd1").addClass("has-error").removeClass("has-success");
+			$("#errMsg").text("原密码输入错误！");
+			pwd1.select();
+			return false;
+		}else{
+			$("div .pwd1").removeClass("has-error").addClass("has-success");
+			$("#errMsg").text("");
+		}
+	});
+	return true;
+};
+// 检查新密码
+function checkNew(){
+	var pwd2 = $("#password2");
+	if(pwd2.val().replace(/\s/g,"") == ""){
+		$("div .pwd2").addClass("has-error").removeClass("has-success");
+		$("#errMsg").text("新密码不能为空！");
+		pwd2.select();
+		return false;
+	}
+	if(pwd2.val().length < 6){
+		$("div .pwd2").addClass("has-error").removeClass("has-success");
+		$("#errMsg").text("请设置6位数以上密码！");
+		pwd2.select();
+		return false;
+	}
+	$("div .pwd2").removeClass("has-error").addClass("has-success");
+	$("#errMsg").text("");
+	return true;
+};
+
+function verifyPwd(){
+	var pwd3 = $("#password3");
+	if(pwd3.val().replace(/\s/g,"") == ""){
+		$("div .pwd3").addClass("has-error").removeClass("has-success");
+		$("#errMsg").text("确认新密码不能为空！");
+		pwd3.select();
+		return false;
+	}
+	if(pwd3.val() != $("#password2").val()){
+		$("div .pwd3").addClass("has-error").removeClass("has-success");
+		$("#errMsg").text("两次输入密码不一致！");
+		pwd3.select();
+		return false;
+	}
+	$("div .pwd3").removeClass("has-error").addClass("has-success");
+	$("#errMsg").text("");
+	return true;
+}
+
+function savePwd(){
+	if(checkPwd() && checkNew() && verifyPwd()){
+		var password = $("#password2");
+		$.post("${base}/user/savePwd",{password:password.val(),r:Math.random()},function(data){
+			if(data){
+				$('#changePwd').modal('hide')
+				$.globalMessenger().post("密码修改成功！请记住您的新密码！");
+				setTimeout(function(){$.globalMessenger().post("如果忘记密码，您可以通过邮件找回！");},5000);
+			}else{
+				$("#errMsg").text("修改密码遇到问题,,,请稍后再试！");
+			}
+		});
+	} else {
+		return ;
+	}
+}
+</script>
+
+<div class="modal fade" id="changePwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">修改密码</h4>
+			</div>
+			<div class="modal-body">
+				<div class="form-group pwd1">
+					<input type="password" class="form-control" id="password1" placeholder="原密码" onchange="checkPwd();">
+				</div>
+				<div class="form-group pwd2">
+					<input type="password" class="form-control" id="password2" placeholder="新密码" onchange="checkNew();">
+				</div>
+				<div class="form-group pwd3">
+					<input type="password" class="form-control" id="password3" placeholder="确认新密码" onchange="verifyPwd();">
+				</div>
+				<div align="center">&nbsp;<span style="color:red" id="errMsg"></span></div>
+			</div>
+			<div class="modal-footer">
+				<a class="btn btn-primary" onclick="savePwd();">保存</a>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade" id="passChangepwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+<h4 class="modal-title" id="myModalLabel">修改成功！请记住您的新密码</h4>
+</div>
+</div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

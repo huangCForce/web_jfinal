@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<title>Bootstrap3 template</title>
+<meta charset="utf-8">
+<!-- 确保适当的绘制和触屏缩放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 让IE浏览器运行最新的渲染模式 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<!-- 兼容WP8和IE10 -->
+<link rel="stylesheet" type="text/css" href="${base}/static/css/viewportForIE10_WP8.css">
+<!-- Bootstrap -->
+<link rel="stylesheet" media="screen" href="${base}/static/bootstrap/css/bootstrap.css">
+<!-- Loading grumble -->
+<link rel="stylesheet" href="${base}/static/grumble/css/grumble.min.css?v=5">
+<!--[if lt IE 9]>
+<script src="${base}/static/bootstrap/assets/js/html5shiv.js"></script>
+<script src="${base}/static/bootstrap/assets/js/respond.min.js"></script>
+<![endif]-->
+</head>
+<body>
+<input type="hidden" id="errMsg" value="${errMsg!}">
+
+  <div class="container col-md-3 col-md-offset-8">
+    <form class="form-signin" id="loginForm" method="post" action="${base}/login/check">
+      <input type="text" id="username" name="username" value="${username!}" onKeyUp="codeKeyup(event);" class="form-control" placeholder="用户名/邮箱/手机号码" autofocus>
+      <input type="password" id="password" name="password" onKeyUp="codeKeyup(event);" class="form-control" placeholder="登录密码">
+      <label class="checkbox">
+        <input type="checkbox" name="remember" value="1"> 记住我，十天内免登录
+      </label>
+      <a class="btn btn-lg btn-primary btn-block" onclick="_login();">登录</a>
+      
+      <div>
+        <div class="register">
+          <a href="${base}/register"><span>现在注册</span></a>        
+          <a href="#"><span>忘记密码</span></a>       
+        </div>
+      </div>
+
+    </form>
+
+  </div> <!-- /container -->
+
+</body>
+<script src="${base}/static/jquery/js/jquery.js"></script>
+<script src="${base}/static/bootstrap/js/bootstrap.js"></script>
+<script src="${base}/static/grumble/js/jquery.grumble.min.js?v=7"></script>
+<!-- 兼容WP8和IE10 -->
+<script src="${base}/static/js/viewportForIE10_WP8.js"></script>
+<style type="text/css">
+body {
+  background: url(${base}/static/images/img/img2.jpg) no-repeat;
+  background-size: 100%;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 80px auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 10px;
+}
+.register {
+  margin: 10px auto;
+}
+.register a{
+  margin: 0 30px 0 30px
+}
+.register span{
+  font-size: 1.5em;
+}
+</style>
+<script>
+function _login(){
+  var username = $("#username");
+  var passwd = $("#password");
+  if(username.val().replace(/\s/g,"") == ""){
+    empUsername();
+    username.focus();
+    return;
+  }
+  if(passwd.val().replace(/\s/g,"") == ""){
+    empPasswd();
+    passwd.focus();
+    return;
+  }
+  $("#loginForm").submit();
+  return;
+};
+function empUsername(){
+  $("#username").grumble({
+    text:'请输入用户名',
+    angle:90,
+    distance:160,
+    showAfter:100,
+    hideAfter:2000
+  });
+};
+function empPasswd(){
+  $("#password").grumble({
+    text:'请输入密码',
+    angle:90,
+    distance:160,
+    showAfter:100,
+    hideAfter:2000
+  });
+};
+$(function() {
+  var errMsg = $("#errMsg").val();
+  if(errMsg=="1"){
+	$("#username").grumble({
+		text:'用户名或密码错误，请检查后重新输入...',
+		angle:270,
+		distance:150,
+		showAfter:100,
+		hideAfter:3000
+	});
+  }
+});
+function codeKeyup(e){
+  e = window.event||e;
+  var code = e.keyCode || e.which;
+	if (code=="13")
+	{
+	   _login();
+	}
+}
+</script>
+</html>

@@ -1,0 +1,69 @@
+<#macro layout>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<#include "/WEB-INF/common/_head.html"/>
+</head>
+
+<body>
+	
+	<a class="sr-only" href="#content">Skip navigation</a>
+
+	<!-- Docs master nav -->
+	<header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a href="${base}/" class="navbar-brand">通讯录</a>
+			</div>
+			<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+				<ul class="nav navbar-nav">
+					<li><a href="#">主页</a></li>
+					<li><a href="#">个人信息</a></li>
+					<li><a href="#">初中集体</a></li>
+					<li><a href="#">高中同窗</a></li>
+					<li><a href="#">大学时光</a></li>
+					<li><a href="#">通知<span class="badge pull-right">11</span></a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">欢迎您：${user.username!}<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#" onclick="changepwd();">修改密码</a></li>
+							<li><a href="${base}/login/logout">注销</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<!-- 导航内容的展示 -->
+	<div class="bs-header" id="content">
+		<div class="container">
+			<h1>主页</h1>
+			<p>测试测试测试测试测试测试测试测试测试测试测试测试测试</p>
+		</div>
+	</div>
+	
+	<!-- 主体内容 -->
+	<div class="container bs-docs-container">
+		<#nested />
+	</div>
+
+</body>
+<#include "/WEB-INF/common/_bottom.html"/>
+<!-- 修改密码的模态框 -->
+<div id="changpwd"></div>
+<script>
+function changepwd(){
+	$("#changpwd").load("${base}/user/changepwd");
+};
+</script>
+</html>
+</#macro>
