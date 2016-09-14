@@ -2,6 +2,7 @@ package com.huang.user;
 
 import com.huang.common.GlobalConstant;
 import com.huang.login.LoginUtils;
+import com.huang.model.User;
 import com.huang.utils.SystemUtils;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;

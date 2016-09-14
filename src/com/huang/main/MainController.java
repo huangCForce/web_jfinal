@@ -1,7 +1,7 @@
 package com.huang.main;
 
 import com.huang.login.LoginUtils;
-import com.huang.user.User;
+import com.huang.model.User;
 import com.jfinal.core.Controller;
 import com.jfinal.route.ControllerBind;
 

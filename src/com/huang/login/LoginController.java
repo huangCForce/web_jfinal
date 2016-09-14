@@ -2,7 +2,7 @@ package com.huang.login;
 
 import com.huang.common.GlobalConstant;
 import com.huang.main.MainController;
-import com.huang.user.User;
+import com.huang.model.User;
 import com.huang.utils.SystemUtils;
 import com.jfinal.core.Controller;
 import com.jfinal.route.ControllerBind;
